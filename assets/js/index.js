@@ -3,6 +3,7 @@ const body = document.querySelector("body");
 const habitaciones = document.getElementById("floatingPassword1");
 const min_metros = document.getElementById("floatingPassword2");
 const max_metros = document.getElementById("floatingPassword3");
+const invalid = document.getElementById("invalid-feedback");
 const buscar = document.getElementById("buscar");
 const total = document.getElementById("totalPropiedades");
 let llenado = true;
@@ -124,18 +125,24 @@ function mayor_y_menor(mayor, menor) {
 }
 
 buscar.addEventListener("click", () => {
-  if (total_habitaciones == null || total_max == null || total_min == null) {
-    alert("Debe llenar todos los campos");
+  if (total_habitaciones == 0 || total_max == null || total_min == null) {
+    min_metros.classList.add("is-invalid");
+    max_metros.classList.add("is-invalid");
+    habitaciones.classList.add("is-invalid");
+    invalid.style.display = "block";
     return 0;
   } else {
+    min_metros.classList.remove("is-invalid");
+    max_metros.classList.remove("is-invalid");
+    habitaciones.classList.remove("is-invalid");
+    invalid.style.display = "none";
     mayor_y_menor(total_max, total_min);
     recorrer_arreglo();
     content.innerHTML = html_filtro;
     total.innerHTML = "Total: " + contador;
   }
   if (contador == 0) {
-    content.innerHTML =
-      "<h5>No hay propiedades que coincidan con la busqueda.</h5>";
+    content.innerHTML = "<h5>No existen coincidencias con su busqueda.</h5>";
   }
   html_filtro = "";
   contador = 0;
